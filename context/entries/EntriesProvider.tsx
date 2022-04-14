@@ -26,7 +26,18 @@ export const EntriesProvider:FC = ({ children }) => {
 
     const deleteEntry = async( id: string ) => {
         try {
-            const { data } = await entriesApi.delete<Entry>(`/entries/${id}`)
+            const { data } = await entriesApi.delete<Entry>(`/entries/${id}`);
+            console.log(data)
+            
+            dispatch({ type:'[Entry] Delete-Data', payload: data })
+            enqueueSnackbar( 'Se eliminó la propuesta', {
+                variant: 'error',
+                autoHideDuration: 1500,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'right'
+                }
+            })
         } catch (error) {
             console.log(error);
         }

@@ -4,9 +4,8 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 import { UIProvider } from '../context/ui';
 import { EntriesProvider } from '../context/entries';
-
 import { darkTheme, lightTheme } from '../themes';
-
+import 'animate.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

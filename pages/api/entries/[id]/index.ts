@@ -43,9 +43,9 @@ const deleteEntry = async( req: NextApiRequest, res: NextApiResponse ) => {
         }) 
     }
     try {
-        await Entry.findByIdAndDelete( id );
+        const deletedEntry = await Entry.findByIdAndDelete( id );
         await db.disconnect();
-        res.status(200).json({ message: 'entrada eliminada' });
+        res.status(200).json( deletedEntry );
         
         
     } catch (error: any) {

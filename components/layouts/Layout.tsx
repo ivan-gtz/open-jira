@@ -16,7 +16,7 @@ export const Layout:FC<Props> = ({ title = 'OpenJira', children }) => {
 
             <Navbar />
             <Sidebar />
-            <Box sx={{ padding: '16px 16px' }} >
+            <Box sx={{ padding: '30px 30px' }} className={'animate__animated animate__fadeIn'} >
                 { children }
             </Box>
 

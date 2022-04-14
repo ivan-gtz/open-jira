@@ -42,7 +42,7 @@ export const EntryList:FC<Props> = ({ status }) => {
                         overflow: 'scroll', 
                         backgroundColor: 'transparent',
                         '&::-webkit-scrollbar': { display: 'none' }, 
-                        padding: '4px 2px',
+                        padding: '4px 5px',
                     }} 
             >
                 <List sx={{ opacity: isDragging ? 0.3 : 1, padding: '3px', transition: 'all .3s' }} >

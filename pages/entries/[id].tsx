@@ -18,6 +18,7 @@ import { Entry, EntryStatus } from "../../interfaces";
 import { dbEntries } from '../../database';
 import { EntriesContext } from '../../context/entries';
 import { dateFunctions } from '../../utils';
+import { useRouter } from 'next/router';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -28,7 +29,9 @@ interface Props {
 
 export const EntryPage:FC<Props> = ( { entry } ) => {
     
-    const { updateEntry } = useContext( EntriesContext );
+    const { updateEntry, deleteEntry } = useContext( EntriesContext );
+
+    const router = useRouter();
     
     const [inputValue, setInputValue] = useState( entry.description );
     const [status, setStatus] = useState<EntryStatus>( entry.status );
@@ -40,7 +43,7 @@ export const EntryPage:FC<Props> = ( { entry } ) => {
         setInputValue( target.value );
     }
 
-    const onStatusChnaged = ( { target } :ChangeEvent<HTMLInputElement> ) => {
+    const onStatusChanged = ( { target } :ChangeEvent<HTMLInputElement> ) => {
         console.log(target.value);
         setStatus( target.value as EntryStatus);
     }
@@ -55,6 +58,12 @@ export const EntryPage:FC<Props> = ( { entry } ) => {
         }
         
         updateEntry( updatedEntry, true );
+        router.push('/');
+    }
+
+    const onDelete = () => {
+        deleteEntry( entry._id );
+        router.push('/');
     }
 
     return (
@@ -65,7 +74,7 @@ export const EntryPage:FC<Props> = ( { entry } ) => {
                 sx={{ marginTop: 2 }}
             >
                 <Grid item xs={ 12 } sm={ 8 } md={ 6 }>
-                    <Card>
+                    <Card className={'animate__animated animate__fadeIn'}>
                         <CardHeader 
                             title={`Entrada:`}
                             subheader={` Creada ${ dateFunctions.getFormatDistanceToNow( entry.createdAt )} `}
@@ -89,7 +98,7 @@ export const EntryPage:FC<Props> = ( { entry } ) => {
                                 <RadioGroup
                                     row
                                     value={ status }
-                                    onChange={ onStatusChnaged }
+                                    onChange={ onStatusChanged }
                                 >
                                     {
                                         validStatus.map( option => (
@@ -122,12 +131,16 @@ export const EntryPage:FC<Props> = ( { entry } ) => {
                 </Grid>
             </Grid>
 
-            <IconButton sx={{
-                position: 'fixed',
-                bottom: 30,
-                right: 30,
-                backgroundColor: 'error.dark'
-            }}>
+            <IconButton 
+                sx={{
+                    position: 'fixed',
+                    bottom: 35,
+                    right: 50,
+                    backgroundColor: 'error.dark'
+                }}
+                onClick={ onDelete }
+                size='large'
+            >
                 <DeleteOutlineRoundedIcon />
             </IconButton>
 
