@@ -30,7 +30,7 @@ export const EntriesProvider:FC = ({ children }) => {
             console.log(data)
             
             dispatch({ type:'[Entry] Delete-Data', payload: data })
-            enqueueSnackbar( 'Se eliminó la propuesta', {
+            enqueueSnackbar( 'Se eliminó la entrada', {
                 variant: 'error',
                 autoHideDuration: 1500,
                 anchorOrigin: {
@@ -63,11 +63,23 @@ export const EntriesProvider:FC = ({ children }) => {
             console.log({ error });
         }
     }
-
     const refreshEntries = async(  ) => {
         const { data } = await entriesApi.get<Entry[]>('/entries');
         dispatch({ type: '[Entry] Refresh-Data', payload: data })
     }   
+
+    const resetEntries = async() => {
+        await entriesApi.put<Entry[]>('/entries')
+        dispatch({type: '[Entry] Reset-Data'});
+        enqueueSnackbar( 'Se reseteó todas las entradas', {
+            variant: 'success',
+            autoHideDuration: 1800,
+            anchorOrigin: {
+                vertical: 'top',
+                horizontal: 'right'
+            }
+        })
+    }
 
     useEffect(() => {
         refreshEntries()
@@ -81,7 +93,8 @@ export const EntriesProvider:FC = ({ children }) => {
             //Methods
             addNewEntry,
             updateEntry,
-            deleteEntry
+            deleteEntry,
+            resetEntries
         }} >
             { children }
         </EntriesContext.Provider>

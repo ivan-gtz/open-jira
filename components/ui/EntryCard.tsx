@@ -42,7 +42,11 @@ export const EntryCard:FC<Props> = ({ entry }) => {
                     <Typography variant="subtitle1" sx={{ whiteSpace: 'pre-line' }}>{ entry.description }</Typography>
                 </CardContent>
                 <CardActions sx={{ display: 'flex', justifyContent: 'end', paddingRight: '2' }} >
-                    <Typography variant= 'body2' >{dateFunctions.getFormatDistanceToNow( entry.createdAt )}</Typography>
+                    <Typography 
+                        variant= 'body2' 
+                        sx={{ color: '#9ca3af' }}
+                    >{dateFunctions.getFormatDistanceToNow( entry.createdAt )}
+                    </Typography>
                 </CardActions>
             </CardActionArea>
         </Card>
